@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native'
 import { StyleSheet } from 'react-native'
 import InputForm from '../components/InputForm'
 import { Platform } from 'react-native'
+import TodoItem from '../components/TodoItem'
 
 const MainScreen = () => {
   return (
@@ -14,6 +15,7 @@ const MainScreen = () => {
       <Text style={styles.pageTitle}> ToDo App</Text>
       <View style={styles.listView}>
         <Text style={styles.listTitle}>할 일</Text>
+        <TodoItem />
       </View>
       <View style={styles.separator}></View>
       <View style={styles.listView}>
