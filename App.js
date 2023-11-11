@@ -7,6 +7,7 @@ import { Provider } from'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen';
+import app from './firebase';
 
 export default function App() {
 
