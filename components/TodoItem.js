@@ -1,37 +1,53 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import CheckboxUnchecked from '../assets/checkbox-unchecked.svg'
-import CheckboxChecked from '../assets/checkbox-checked.svg'
-import DeleteIcon from '../assets/delete.svg'
-import { Pressable } from'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import CheckboxUnchecked from '../assets/checkbox-unchecked.svg';
+import CheckboxChecked from '../assets/checkbox-checked.svg';
+import DeleteIcon from '../assets/delete.svg';
+import { useDispatch } from 'react-redux';
+import { deleteTodo, updateTodo } from '../redux/slices/todoSlice';
 
+//props 내려 줄 수 있는 이유
+// renderItem={({item}) => <TodoItem { ...item}
+//이 방식으로 item을 내려 주기에 props로 받아오기 가능
 
-const  TodoItem = () => {
+const TodoItem = (props) => {
+    const dispatch = useDispatch();
     return (
         <View style={styles.itemContainer}>
-            <Pressable 
-                hitSlop = {10}
-                style = {styles.itemCheckbox}
+            <Pressable
+                hitSlop={10}
+                style={styles.itemCheckbox}
+                onPress={() => dispatch(updateTodo(props.id))}
+        //컴포넌트에서 Redux 의 store로 updateTodo라는 리듀서를 통해 dispatch
             >
-                <CheckboxUnchecked style={styles.itemCheckboxCheckedIcon}>
-                </CheckboxUnchecked>
+                {props.state === 'todo' ?
+                    <CheckboxUnchecked />
+                    :
+                    <CheckboxChecked style={styles.itemCheckboxCheckedIcon} />
+                }
             </Pressable>
-            <Text style={[styles.itemText, styles.itemTextChecked]}>
-                Todo Item
+            <Text
+                style={[styles.itemText,
+                props.state === 'done' ? styles.itemTextChecked : '']}
+            >
+                {props.text}
             </Text>
             <Pressable
-                styles={[styles.deleteButton,
-                styles.deleteButtonDone]}
-                hitSlop = {10}
-                >
+                style={[
+                    styles.deleteButton,
+                    props.state === 'done' ? styles.deleteButtonDone : ''
+                //deleteButton , deleteButtonDone 둘 중 하나를 적용함.
+                ]}
+                hitSlop={10}
+                onPress={() => dispatch(deleteTodo(props.id))}
+            >
+                <DeleteIcon />
             </Pressable>
         </View>
-
-    );
+    )
 }
 
- 
-export default TodoItem;
+export default TodoItem
 
 const styles = StyleSheet.create({
     itemContainer: {

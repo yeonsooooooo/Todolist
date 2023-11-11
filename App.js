@@ -2,12 +2,16 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 import MainScreen from './screens/MainScreen';  
 import { SafeAreaView } from'react-native';
+import {store} from './redux/store';
+import { Provider } from'react-redux';
 
 export default function App() {
   return (
-    <SafeAreaView>
-      <MainScreen/>
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView>
+        <MainScreen/>
+      </SafeAreaView>
+    </Provider>
     
   );
 }
